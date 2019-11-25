@@ -36,13 +36,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: 3
   },
   gaugeContainer: {
-    [theme.breakpoints.down('sm')]: {
-      marginBottom: theme.spacing(2)
-    }
+    marginBottom: theme.spacing(4)
   },
   gaugesOuter: {
     [theme.breakpoints.up('lg')]: {
-      maxWidth: 400
+      maxWidth: 450
     }
   }
 }));
@@ -75,7 +73,14 @@ export const LongviewDetailOverview: React.FC<CombinedProps> = props => {
       <Grid container>
         <Grid item xs={12}>
           <Paper className={classes.paperSection}>
-            <Grid container justify="space-between" item xs={12} spacing={0}>
+            <Grid
+              container
+              justify="space-between"
+              alignItems="flex-start"
+              item
+              xs={12}
+              spacing={0}
+            >
               <IconSection
                 longviewClientData={props.longviewClientData}
                 client={props.client}
