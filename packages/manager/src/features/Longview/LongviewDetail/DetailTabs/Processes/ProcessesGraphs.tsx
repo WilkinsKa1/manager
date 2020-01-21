@@ -12,12 +12,13 @@ import {
   LongviewProcesses,
   WithStartAndEnd
 } from 'src/features/Longview/request.types';
-import { convertData } from 'src/features/Longview/shared/formatters';
+import {
+  convertData,
+  formatMemory
+} from 'src/features/Longview/shared/formatters';
 import { statMax } from 'src/features/Longview/shared/utilities';
 import { readableBytes } from 'src/utilities/unitConversions';
-import { formatMemory } from '../../../shared/formatters';
-import { formatCPU } from '../OverviewGraphs/CPUGraph';
-import { Process } from './common';
+import { Process } from './types';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginTop: theme.spacing(1) + 2,
@@ -105,12 +106,13 @@ const ProcessesGraphs: React.FC<CombinedProps> = props => {
         <LongviewLineGraph
           title="CPU"
           subtitle="%"
+          tooltipUnit="%"
           data={[
             {
-              data: _convertData(cpu, start, end, formatCPU),
+              data: _convertData(cpu, start, end),
               label: 'CPU',
-              borderColor: theme.graphs.deepBlue,
-              backgroundColor: theme.graphs.deepBlueBorder
+              borderColor: 'transparent',
+              backgroundColor: theme.graphs.cpu.system
             }
           ]}
           {...commonGraphProps}
@@ -119,12 +121,13 @@ const ProcessesGraphs: React.FC<CombinedProps> = props => {
           <LongviewLineGraph
             title="RAM"
             subtitle={memUnit}
+            maxUnit={memUnit}
             data={[
               {
                 data: _convertData(memory, start, end, formatMemory),
                 label: 'RAM',
-                borderColor: theme.graphs.purple,
-                backgroundColor: theme.graphs.purpleBorder
+                borderColor: 'transparent',
+                backgroundColor: theme.graphs.memory.used
               }
             ]}
             {...commonGraphProps}
@@ -133,12 +136,13 @@ const ProcessesGraphs: React.FC<CombinedProps> = props => {
         <div className={classes.graphWrap}>
           <LongviewLineGraph
             title="Count"
+            suggestedMax={10}
             data={[
               {
                 data: _convertData(count, start, end, formatCount),
                 label: 'Count',
-                borderColor: theme.graphs.deepBlue,
-                backgroundColor: theme.graphs.deepBlueBorder
+                borderColor: 'transparent',
+                backgroundColor: theme.graphs.processCount
               }
             ]}
             {...commonGraphProps}
@@ -148,18 +152,19 @@ const ProcessesGraphs: React.FC<CombinedProps> = props => {
           <LongviewLineGraph
             title="Disk I/O"
             subtitle={ioUnit + '/s'}
+            tooltipUnit={ioUnit + '/s'}
             nativeLegend
             data={[
               {
                 label: 'Write',
-                borderColor: theme.graphs.lightOrangeBorder,
-                backgroundColor: theme.graphs.lightOrange,
+                borderColor: 'transparent',
+                backgroundColor: theme.graphs.diskIO.write,
                 data: _convertData(iowritekbytes, start, end, formatDisk)
               },
               {
                 label: 'Read',
-                borderColor: theme.graphs.lightYellowBorder,
-                backgroundColor: theme.graphs.lightYellow,
+                borderColor: 'transparent',
+                backgroundColor: theme.graphs.diskIO.read,
                 data: _convertData(ioreadkbytes, start, end, formatDisk)
               }
             ]}
