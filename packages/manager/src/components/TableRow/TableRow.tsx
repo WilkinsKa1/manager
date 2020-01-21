@@ -102,21 +102,21 @@ const styles = (theme: Theme) =>
     activeCaretOverlay: {
       '&:before': {
         content: '""',
-        width: 14,
-        height: '48%',
         position: 'absolute',
         left: '100%',
-        top: 1,
-        background: `linear-gradient(to right top, ${theme.bg.lightBlue} 50%, transparent 50%)`
+        top: 0,
+        width: 15,
+        height: '50%',
+        background: `linear-gradient(to right top, ${theme.bg.lightBlue} 46%, transparent 46%)`
       },
       '&:after': {
         content: '""',
-        width: 14,
-        height: '48%',
         position: 'absolute',
         left: '100%',
-        bottom: 1,
-        background: `linear-gradient(to right bottom, ${theme.bg.lightBlue} 50%, transparent 50%)`
+        bottom: 0,
+        width: 15,
+        height: '50%',
+        background: `linear-gradient(to right bottom, ${theme.bg.lightBlue} 46%, transparent 46%)`
       }
     }
   });
