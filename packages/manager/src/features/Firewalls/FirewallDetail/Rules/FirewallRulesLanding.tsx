@@ -227,16 +227,26 @@ const FirewallRulesLanding: React.FC<CombinedProps> = props => {
             <Button
               buttonType="cancel"
               onClick={() => setDiscardChangesModalOpen(true)}
+              aria-describedby="discardChanges"
             >
               Discard Changes
             </Button>
+            <div id="discardChanges" className="visually-hidden">
+              This will discard the following pending changes for this Firewall:{' '}
+              {ruleToModify}
+            </div>
             <Button
               buttonType="primary"
               onClick={applyChanges}
               loading={submitting}
+              aria-describedby="applyChanges"
             >
               Apply Changes
             </Button>
+            <div id="applyChanges" className="visually-hidden">
+              This will apply the following pending changes for this Firewall:{' '}
+              {ruleToModify}
+            </div>
           </ActionsPanel>
         </FixedToolBar>
       )}
