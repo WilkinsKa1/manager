@@ -106,6 +106,7 @@ export interface BaseSelectProps
   errorGroup?: string;
   guidance?: string | React.ReactNode;
   inputId?: any;
+  displayA1ySelect?: boolean;
 }
 
 interface CreatableProps extends CreatableSelectProps<any> {}
@@ -144,6 +145,7 @@ class Select extends React.PureComponent<CombinedProps, {}> {
       errorGroup,
       onFocus,
       inputId,
+      displayA11ySelect,
       ...restOfProps
     } = this.props;
 
@@ -167,65 +169,89 @@ class Select extends React.PureComponent<CombinedProps, {}> {
     const BaseSelect: React.ComponentClass<PossibleProps> =
       variant === 'creatable' ? CreatableSelect : ReactSelect;
 
+    const displayOptions = (_options: any) => {
+      if (_options !== undefined) {
+        return _options.map((option: any) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ));
+      } else {
+        return <option value="0">Empty</option>;
+      }
+    };
     return (
-      <BaseSelect
-        {...restOfProps}
-        // If isClearable hasn't been supplied, default to true
-        isClearable={isClearable === undefined ? true : isClearable}
-        isSearchable
-        blurInputOnSelect={blurInputOnSelect}
-        isLoading={isLoading}
-        filterOption={filterOption}
-        isMulti={isMulti}
-        isDisabled={disabled}
-        classes={classes}
-        className={classNames(className, {
-          [classes.root]: true
-        })}
-        classNamePrefix="react-select"
-        /*
+      <>
+        <fieldset>
+          <label>{label}</label>
+          <select
+            id={inputId ? inputId : convertToKebabCase(label)}
+            name={label}
+          >
+            {displayOptions(options)}
+          </select>
+        </fieldset>
+
+        <BaseSelect
+          aria-hidden
+          {...restOfProps}
+          // If isClearable hasn't been supplied, default to true
+          isClearable={isClearable === undefined ? true : isClearable}
+          isSearchable
+          blurInputOnSelect={blurInputOnSelect}
+          isLoading={isLoading}
+          filterOption={filterOption}
+          isMulti={isMulti}
+          isDisabled={disabled}
+          classes={classes}
+          className={classNames(className, {
+            [classes.root]: true
+          })}
+          classNamePrefix="react-select"
+          /*
           textFieldProps isn't native to react-select
           but we're using the MUI select element so any props that
           can be passed to the MUI TextField element can be passed here
          */
-        inputId={inputId ? inputId : convertToKebabCase(label)}
-        textFieldProps={{
-          ...textFieldProps,
-          label,
-          hideLabel,
-          errorText,
-          errorGroup,
-          disabled,
-          noMarginTop,
-          InputLabelProps: {
-            shrink: true
-          },
-          className: classNames(
-            {
-              [classes.medium]: medium,
-              [classes.small]: small,
-              [classes.inline]: inline
+          inputId={inputId ? inputId : convertToKebabCase(label)}
+          textFieldProps={{
+            ...textFieldProps,
+            label,
+            hideLabel,
+            errorText,
+            errorGroup,
+            disabled,
+            noMarginTop,
+            InputLabelProps: {
+              shrink: true
             },
-            className
-          )
-        }}
-        /**
-         * react-select wants you to pass "null" to clear out the value
-         * so we need to allow the parent to pass that if it wants
-         */
-        value={typeof value === 'undefined' ? undefined : value}
-        onBlur={onBlur}
-        options={options}
-        components={combinedComponents}
-        onChange={onChange}
-        onInputChange={onInputChange}
-        onCreateOption={createNew}
-        placeholder={placeholder || 'Select a value...'}
-        noOptionsMessage={this.props.noOptionsMessage || (() => 'No results')}
-        menuPlacement={this.props.menuPlacement || 'auto'}
-        onMenuClose={onMenuClose}
-        onFocus={onFocus}
-      />
+            className: classNames(
+              {
+                [classes.medium]: medium,
+                [classes.small]: small,
+                [classes.inline]: inline
+              },
+              className
+            )
+          }}
+          /**
+           * react-select wants you to pass "null" to clear out the value
+           * so we need to allow the parent to pass that if it wants
+           */
+          value={typeof value === 'undefined' ? undefined : value}
+          onBlur={onBlur}
+          options={options}
+          components={combinedComponents}
+          onChange={onChange}
+          onInputChange={onInputChange}
+          onCreateOption={createNew}
+          placeholder={placeholder || 'Select a value...'}
+          noOptionsMessage={this.props.noOptionsMessage || (() => 'No results')}
+          menuPlacement={this.props.menuPlacement || 'auto'}
+          onMenuClose={onMenuClose}
+          onFocus={onFocus}
+        />
+      </>
     );
   }
 }
