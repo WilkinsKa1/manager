@@ -268,14 +268,7 @@ export class FromStackScriptContent extends React.PureComponent<CombinedProps> {
 
     return (
       <React.Fragment>
-        <Grid
-          data-qa-panel={header}
-          item
-          className={`${classes.main} mlMain py0`}
-          role="tabpanel"
-          id={`tabpanel-${determineIDName}`}
-          aria-labelledby={`tab-${determineIDName}`}
-        >
+        <Grid data-qa-panel={header} item>
           <form>
             <CreateLinodeDisabled isDisabled={disabled} />
             <SelectStackScriptPanel

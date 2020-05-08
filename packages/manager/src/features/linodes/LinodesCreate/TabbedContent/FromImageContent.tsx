@@ -121,7 +121,7 @@ export class FromImageContent extends React.PureComponent<CombinedProps> {
 
     if (variant === 'private' && Object.keys(privateImages).length === 0) {
       return (
-        <Grid item className={`${classes.main} mlMain py0`}>
+        <Grid item>
           <Paper>
             <Placeholder
               title="My Images"
@@ -191,13 +191,7 @@ export class FromImageContent extends React.PureComponent<CombinedProps> {
 
     return (
       <React.Fragment>
-        <Grid
-          item
-          className={`${classes.main} mlMain py0`}
-          role="tabpanel"
-          id={`tabpanel-${determineIDName}`}
-          aria-labelledby={`tab-${determineIDName}`}
-        >
+        <Grid item>
           <form>
             {hasErrorFor.none && !!showGeneralError && (
               <Notice error spacingTop={8} text={hasErrorFor.none} />
