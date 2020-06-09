@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   closeIcon: {
     position: 'absolute',
-    right: 4,
+    right: 10,
     cursor: 'pointer',
     border: 'none',
     color: theme.palette.text.primary,
