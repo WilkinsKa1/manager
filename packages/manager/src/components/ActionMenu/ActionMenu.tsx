@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export interface Props {
-  createActions: (closeMenu: Function) => Action[];
+  createActions: (closeMenu?: Function) => Action[];
   toggleOpenCallback?: () => void;
   // we want to require using aria label for these buttons
   // as they don't have text (just an icon)

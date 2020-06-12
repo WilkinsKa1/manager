@@ -12,25 +12,55 @@ class StoryActionMenu extends React.Component<CombinedProps> {
   createActions = () => (): Action[] => {
     return [
       {
-        title: 'First Action',
+        title: 'Reboot',
         onClick: (e: React.MouseEvent<HTMLElement>) => {
           e.preventDefault();
         }
       },
       {
-        title: 'Action 1',
+        title: 'Power Off',
         onClick: (e: React.MouseEvent<HTMLElement>) => {
           e.preventDefault();
         }
       },
       {
-        title: 'Action 3',
+        title: 'Launch Console',
         onClick: (e: React.MouseEvent<HTMLElement>) => {
           e.preventDefault();
         }
       },
       {
-        title: 'Last Action',
+        title: 'Clone',
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
+          e.preventDefault();
+        }
+      },
+      {
+        title: 'Migrate',
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
+          e.preventDefault();
+        }
+      },
+      {
+        title: 'Resize',
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
+          e.preventDefault();
+        }
+      },
+      {
+        title: 'View Backups',
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
+          e.preventDefault();
+        }
+      },
+      {
+        title: 'Settings',
+        onClick: (e: React.MouseEvent<HTMLElement>) => {
+          e.preventDefault();
+        }
+      },
+      {
+        title: 'Delete',
         onClick: (e: React.MouseEvent<HTMLElement>) => {
           e.preventDefault();
         }

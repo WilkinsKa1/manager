@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-
+import { compose } from 'redux';
 import ActionMenu, { Action } from 'src/components/ActionMenu/ActionMenu';
+import ActionMenu_CMR from 'src/components/ActionMenu_CMR/ActionMenu_CMR';
+import withFeatureFlagProvider from 'src/containers/withFeatureFlagProvider.container';
+import withFeatureFlagConsumer, {
+  FeatureFlagConsumerProps
+} from 'src/containers/withFeatureFlagConsumer.container';
 
 export interface Props {
   onShowConfig: (volumeLabel: string, volumePath: string) => void;
@@ -33,7 +38,9 @@ export interface Props {
   size: number;
 }
 
-export type CombinedProps = Props & RouteComponentProps<{}>;
+export type CombinedProps = Props &
+  RouteComponentProps<{}> &
+  FeatureFlagConsumerProps;
 
 export class VolumesActionMenu extends React.Component<CombinedProps> {
   handleShowConfig = () => {
@@ -80,13 +87,13 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
   createActions = () => {
     const { attached, poweredOff } = this.props;
 
-    return (closeMenu: Function): Action[] => {
+    return (): Action[] => {
       const actions = [
         {
           title: 'Show Configuration',
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             this.handleShowConfig();
-            closeMenu();
+            //closeMenu();
             e.preventDefault();
           }
         },
@@ -94,7 +101,7 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
           title: 'Edit Volume',
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             this.handleOpenEdit();
-            closeMenu();
+            //closeMenu();
             e.preventDefault();
           }
         },
@@ -102,7 +109,7 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
           title: 'Resize',
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             this.handleResize();
-            closeMenu();
+            //closeMenu();
             e.preventDefault();
           }
         },
@@ -110,7 +117,7 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
           title: 'Clone',
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             this.handleClone();
-            closeMenu();
+            //closeMenu();
             e.preventDefault();
           }
         }
@@ -121,7 +128,7 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
           title: 'Attach',
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             this.handleAttach();
-            closeMenu();
+            //closeMenu();
             e.preventDefault();
           }
         });
@@ -130,7 +137,7 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
           title: 'Detach',
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             this.handleDetach();
-            closeMenu();
+            //closeMenu();
             e.preventDefault();
           }
         });
@@ -141,7 +148,7 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
           title: 'Delete',
           onClick: (e: React.MouseEvent<HTMLElement>) => {
             this.handleDelete();
-            closeMenu();
+            //closeMenu();
             e.preventDefault();
           }
         });
@@ -152,7 +159,12 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
   };
 
   render() {
-    return (
+    return this.props.flags.cmr ? (
+      <ActionMenu_CMR
+        createActions={this.createActions()}
+        ariaLabel={`Action menu for Volume ${this.props.volumeLabel}`}
+      />
+    ) : (
       <ActionMenu
         createActions={this.createActions()}
         ariaLabel={`Action menu for Volume ${this.props.volumeLabel}`}
@@ -161,4 +173,8 @@ export class VolumesActionMenu extends React.Component<CombinedProps> {
   }
 }
 
-export default withRouter(VolumesActionMenu);
+export default compose(
+  withFeatureFlagProvider,
+  withFeatureFlagConsumer,
+  withRouter
+)(VolumesActionMenu);

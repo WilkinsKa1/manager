@@ -11,6 +11,7 @@ import '@reach/menu-button/styles.css';
 import * as React from 'react';
 import HelpIcon from 'src/components/HelpIcon';
 import { makeStyles, Theme } from 'src/components/core/styles';
+import { positionMatchWidth } from '@reach/popover';
 
 export interface Action {
   title: string;
@@ -47,9 +48,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   icon: {},
   popover: {
     '&[data-reach-menu-popover]': {
-      right: 0,
-      // Need this to 'merge the button and items wrapper due to the borderRadius on the wrapper
-      marginTop: -3,
       zIndex: 1
     }
   },
@@ -129,7 +127,7 @@ const ActionMenu: React.FC<CombinedProps> = props => {
           <MoreHoriz aria-hidden className={classes.icon} type="primary" />
           {inlineLabel && <p className={classes.buttonLabel}>{inlineLabel}</p>}
         </MenuButton>
-        <MenuPopover className={classes.popover} portal={false}>
+        <MenuPopover className={classes.popover} position={positionMatchWidth}>
           <MenuItems className={classes.itemsOuter}>
             {(actions as Action[]).map((a, idx) => (
               <MenuLink
