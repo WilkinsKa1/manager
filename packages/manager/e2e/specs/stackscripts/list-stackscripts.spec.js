@@ -40,7 +40,7 @@ describe('StackScripts - List Suite', () => {
 
   it('should contain the deploy with stackscript query params in the create url', () => {
     expect(browser.getUrl()).toMatch(
-      /\??type=One-Click&subtype=Community%20StackScripts&stackScriptID\d*/gi
+      /\??type=StackScripts&subtype=Community%20StackScripts&stackScriptID\d*/gi
     );
   });
 });
