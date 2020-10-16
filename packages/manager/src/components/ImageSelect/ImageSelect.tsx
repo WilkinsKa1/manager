@@ -16,6 +16,7 @@ import { getAPIErrorOrDefault } from 'src/utilities/errorUtils';
 import getSelectedOptionFromGroupedOptions from 'src/utilities/getSelectedOptionFromGroupedOptions';
 import { distroIcons } from './icons';
 import ImageOption from './ImageOption';
+import Combobox from '../Combobox';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -167,21 +168,11 @@ export const ImageSelect: React.FC<Props> = props => {
           <Grid container item direction="column">
             <Grid container item direction="row">
               <Grid item xs={12}>
-                <Select
-                  disabled={disabled}
+                <Combobox
                   label="Images"
-                  isLoading={_loading}
                   placeholder="Choose an image"
-                  options={options}
-                  onChange={onChange}
-                  value={getSelectedOptionFromGroupedOptions(
-                    selectedImageID || '',
-                    options
-                  )}
-                  errorText={error || imageError}
-                  components={{ Option: ImageOption, SingleValue }}
-                  {...reactSelectProps}
-                  className={classNames}
+                  items={options}
+                  // {...reactSelectProps}
                 />
               </Grid>
             </Grid>
