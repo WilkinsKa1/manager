@@ -201,8 +201,8 @@ export const DiskDrawer: React.FC<CombinedProps> = props => {
             />
           )}
         </Grid>
-        <Grid item xs={12} className={classes.section}>
-          <form>
+        <form onSubmit={formik.handleSubmit}>
+          <Grid item xs={12} className={classes.section}>
             <TextField
               disabled={['resize'].includes(props.mode)}
               label="Label"
@@ -279,28 +279,28 @@ export const DiskDrawer: React.FC<CombinedProps> = props => {
             <FormHelperText style={{ marginTop: 8 }}>
               Maximum Size: {props.maximumSize} MB
             </FormHelperText>
-          </form>
-        </Grid>
-        <Grid item className={classes.section}>
-          <ActionsPanel>
-            <Button
-              onClick={() => formik.handleSubmit()}
-              buttonType="primary"
-              loading={formik.isSubmitting}
-              data-testid="submit-disk-form"
-            >
-              {submitLabelMap[mode]}
-            </Button>
-            <Button
-              onClick={props.onClose}
-              buttonType="secondary"
-              className="cancel"
-              data-qa-disk-cancel
-            >
-              Cancel
-            </Button>
-          </ActionsPanel>
-        </Grid>
+          </Grid>
+          <Grid item className={classes.section}>
+            <ActionsPanel>
+              <Button
+                onClick={() => formik.handleSubmit()}
+                buttonType="primary"
+                loading={formik.isSubmitting}
+                data-testid="submit-disk-form"
+              >
+                {submitLabelMap[mode]}
+              </Button>
+              <Button
+                onClick={props.onClose}
+                buttonType="secondary"
+                className="cancel"
+                data-qa-disk-cancel
+              >
+                Cancel
+              </Button>
+            </ActionsPanel>
+          </Grid>
+        </form>
       </Grid>
     </Drawer>
   );

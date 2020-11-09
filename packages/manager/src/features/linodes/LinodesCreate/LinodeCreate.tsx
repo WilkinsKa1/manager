@@ -414,7 +414,7 @@ export class LinodeCreate extends React.PureComponent<
     }
 
     return (
-      <form className={classes.form}>
+      <form className={classes.form} onSubmit={this.createLinode}>
         <Grid item className={`mlMain py0`}>
           {hasErrorFor.none && !!showGeneralError && (
             <Notice error spacingTop={8} text={hasErrorFor.none} />
