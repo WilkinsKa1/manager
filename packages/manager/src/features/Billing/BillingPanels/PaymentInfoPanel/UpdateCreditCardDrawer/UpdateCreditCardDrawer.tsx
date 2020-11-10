@@ -156,65 +156,73 @@ export const UpdateCreditCardDrawer: React.FC<CombinedProps> = props => {
 
   return (
     <Drawer title="Edit Credit Card" open={open} onClose={onClose}>
-      <Grid container className={classes.newccContainer}>
-        <Grid item xs={12}>
-          {generalError && (
-            <Notice error spacingTop={24} spacingBottom={8}>
-              {generalError}
-            </Notice>
-          )}
-          {success && (
-            <Notice success spacingTop={24} spacingBottom={8}>
-              Credit card successfully updated.
-            </Notice>
-          )}
-          <Grid container>
-            <Grid item xs={12}>
-              <TextField
-                label="Credit Card Number"
-                value={cardNumber}
-                onChange={handleCardNumberChange}
-                errorText={hasErrorFor.card_number}
-                className={classes.cardNumber}
-                InputProps={{
-                  inputComponent: creditCardField
-                }}
-              />
-            </Grid>
-            <Grid item className={classes.fullWidthMobile}>
-              <TextField
-                label="Expiration Date"
-                value={expDate}
-                onChange={handleExpiryDateChange}
-                errorText={hasErrorFor.expiry_month || hasErrorFor.expiry_year}
-                placeholder={'MM/YY'}
-              />
-            </Grid>
-            <Grid item className={classes.fullWidthMobile}>
-              <TextField
-                label={cvvLabel}
-                value={cvv}
-                onChange={handleCVVChange}
-                errorText={hasErrorFor.cvv}
-              />
+      <form onSubmit={submitForm}>
+        <Grid container className={classes.newccContainer}>
+          <Grid item xs={12}>
+            {generalError && (
+              <Notice error spacingTop={24} spacingBottom={8}>
+                {generalError}
+              </Notice>
+            )}
+            {success && (
+              <Notice success spacingTop={24} spacingBottom={8}>
+                Credit card successfully updated.
+              </Notice>
+            )}
+            <Grid container>
+              <Grid item xs={12}>
+                <TextField
+                  label="Credit Card Number"
+                  value={cardNumber}
+                  onChange={handleCardNumberChange}
+                  errorText={hasErrorFor.card_number}
+                  className={classes.cardNumber}
+                  InputProps={{
+                    inputComponent: creditCardField
+                  }}
+                />
+              </Grid>
+              <Grid item className={classes.fullWidthMobile}>
+                <TextField
+                  label="Expiration Date"
+                  value={expDate}
+                  onChange={handleExpiryDateChange}
+                  errorText={
+                    hasErrorFor.expiry_month || hasErrorFor.expiry_year
+                  }
+                  placeholder={'MM/YY'}
+                />
+              </Grid>
+              <Grid item className={classes.fullWidthMobile}>
+                <TextField
+                  label={cvvLabel}
+                  value={cvv}
+                  onChange={handleCVVChange}
+                  errorText={hasErrorFor.cvv}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <ActionsPanel>
-        <Button buttonType="primary" onClick={submitForm} loading={submitting}>
-          Save
-        </Button>
-        <Button
-          buttonType="cancel"
-          onClick={() => {
-            resetForm(undefined);
-            onClose();
-          }}
-        >
-          Cancel
-        </Button>
-      </ActionsPanel>
+        <ActionsPanel>
+          <Button
+            buttonType="primary"
+            onClick={submitForm}
+            loading={submitting}
+          >
+            Save
+          </Button>
+          <Button
+            buttonType="cancel"
+            onClick={() => {
+              resetForm(undefined);
+              onClose();
+            }}
+          >
+            Cancel
+          </Button>
+        </ActionsPanel>
+      </form>
     </Drawer>
   );
 };

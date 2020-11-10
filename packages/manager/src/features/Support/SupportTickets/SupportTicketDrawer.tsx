@@ -451,111 +451,115 @@ export const SupportTicketDrawer: React.FC<CombinedProps> = props => {
 
   return (
     <Drawer open={open} onClose={close} title="Open a Support Ticket">
-      {props.children || (
-        <React.Fragment>
-          {generalError && <Notice error text={generalError} data-qa-notice />}
+      <form onSubmit={onSubmit}>
+        {props.children || (
+          <React.Fragment>
+            {generalError && (
+              <Notice error text={generalError} data-qa-notice />
+            )}
 
-          <Typography data-qa-support-ticket-helper-text>
-            {`We love our customers, and we're here to help if you need us.
-          Please keep in mind that not all topics are within the scope of our support.
-          For overall system status, please see `}
-            <a
-              href="https://status.linode.com"
-              target="_blank"
-              aria-describedby="external-site"
-              rel="noopener noreferrer"
+            <Typography data-qa-support-ticket-helper-text>
+              {`We love our customers, and we're here to help if you need us.
+            Please keep in mind that not all topics are within the scope of our support.
+            For overall system status, please see `}
+              <a
+                href="https://status.linode.com"
+                target="_blank"
+                aria-describedby="external-site"
+                rel="noopener noreferrer"
+              >
+                status.linode.com
+              </a>
+              .
+            </Typography>
+            <TextField
+              label="Title"
+              placeholder="Enter a title for your ticket."
+              required
+              value={summary}
+              onChange={handleSummaryInputChange}
+              inputProps={{ maxLength: 64 }}
+              errorText={summaryError}
+              data-qa-ticket-summary
+            />
+            {props.hideProductSelection ? null : (
+              <React.Fragment>
+                <Select
+                  options={topicOptions}
+                  label="What is this regarding?"
+                  value={selectedTopic}
+                  onChange={handleEntityTypeChange}
+                  data-qa-ticket-entity-type
+                  isClearable={false}
+                />
+                {!['none', 'general'].includes(entityType) && (
+                  <>
+                    <Select
+                      options={data}
+                      value={selectedEntity}
+                      disabled={data.length === 0}
+                      errorText={entityError || inputError}
+                      placeholder={`Select a ${entityIdToNameMap[entityType]}`}
+                      label={entityIdToNameMap[entityType] ?? 'Entity Select'}
+                      onChange={handleEntityIDChange}
+                      data-qa-ticket-entity-id
+                      isLoading={entitiesLoading}
+                      isClearable={false}
+                    />
+                    {hasNoEntitiesMessage && (
+                      <FormHelperText>{hasNoEntitiesMessage}</FormHelperText>
+                    )}
+                  </>
+                )}
+              </React.Fragment>
+            )}
+            <TabbedReply
+              required
+              error={descriptionError}
+              handleChange={handleDescriptionInputChange}
+              value={description}
+              innerClass={classes.innerReply}
+              rootClass={classes.rootReply}
+              placeholder={
+                "Tell us more about the trouble you're having and any steps you've already taken to resolve it."
+              }
+            />
+            {/* <TicketAttachmentList attachments={attachments} /> */}
+            <ExpansionPanel
+              heading="Formatting Tips"
+              detailProps={{ className: classes.expPanelSummary }}
             >
-              status.linode.com
-            </a>
-            .
-          </Typography>
-          <TextField
-            label="Title"
-            placeholder="Enter a title for your ticket."
-            required
-            value={summary}
-            onChange={handleSummaryInputChange}
-            inputProps={{ maxLength: 64 }}
-            errorText={summaryError}
-            data-qa-ticket-summary
-          />
-          {props.hideProductSelection ? null : (
-            <React.Fragment>
-              <Select
-                options={topicOptions}
-                label="What is this regarding?"
-                value={selectedTopic}
-                onChange={handleEntityTypeChange}
-                data-qa-ticket-entity-type
-                isClearable={false}
-              />
-              {!['none', 'general'].includes(entityType) && (
-                <>
-                  <Select
-                    options={data}
-                    value={selectedEntity}
-                    disabled={data.length === 0}
-                    errorText={entityError || inputError}
-                    placeholder={`Select a ${entityIdToNameMap[entityType]}`}
-                    label={entityIdToNameMap[entityType] ?? 'Entity Select'}
-                    onChange={handleEntityIDChange}
-                    data-qa-ticket-entity-id
-                    isLoading={entitiesLoading}
-                    isClearable={false}
-                  />
-                  {hasNoEntitiesMessage && (
-                    <FormHelperText>{hasNoEntitiesMessage}</FormHelperText>
-                  )}
-                </>
-              )}
-            </React.Fragment>
-          )}
-          <TabbedReply
-            required
-            error={descriptionError}
-            handleChange={handleDescriptionInputChange}
-            value={description}
-            innerClass={classes.innerReply}
-            rootClass={classes.rootReply}
-            placeholder={
-              "Tell us more about the trouble you're having and any steps you've already taken to resolve it."
-            }
-          />
-          {/* <TicketAttachmentList attachments={attachments} /> */}
-          <ExpansionPanel
-            heading="Formatting Tips"
-            detailProps={{ className: classes.expPanelSummary }}
-          >
-            <Reference rootClass={classes.reference} />
-          </ExpansionPanel>
-          <AttachFileForm
-            inlineDisplay
-            files={files}
-            updateFiles={updateFiles}
-          />
-          <ActionsPanel style={{ marginTop: 16 }}>
-            <Button
-              onClick={onSubmit}
-              disabled={!requirementsMet}
-              loading={submitting}
-              buttonType="primary"
-              data-qa-submit
-              data-testid="submit"
-            >
-              Open Ticket
-            </Button>
-            <Button
-              onClick={close}
-              buttonType="secondary"
-              className="cancel"
-              data-qa-cancel
-              data-testid="cancel"
-            >
-              Cancel
-            </Button>
-          </ActionsPanel>
-        </React.Fragment>
-      )}
+              <Reference rootClass={classes.reference} />
+            </ExpansionPanel>
+            <AttachFileForm
+              inlineDisplay
+              files={files}
+              updateFiles={updateFiles}
+            />
+            <ActionsPanel style={{ marginTop: 16 }}>
+              <Button
+                onClick={onSubmit}
+                disabled={!requirementsMet}
+                loading={submitting}
+                buttonType="primary"
+                data-qa-submit
+                data-testid="submit"
+              >
+                Open Ticket
+              </Button>
+              <Button
+                onClick={close}
+                buttonType="secondary"
+                className="cancel"
+                data-qa-cancel
+                data-testid="cancel"
+              >
+                Cancel
+              </Button>
+            </ActionsPanel>
+          </React.Fragment>
+        )}
+      </form>
     </Drawer>
   );
 };

@@ -108,60 +108,62 @@ class CreateUserDrawer extends React.Component<CombinedProps, State> {
 
     return (
       <Drawer open={open} onClose={onClose} title="Add a User">
-        {generalError && <Notice error text={generalError} />}
-        <TextField
-          label="Username"
-          value={username}
-          required
-          onChange={this.onChangeUsername}
-          errorText={hasErrorFor('username')}
-          data-qa-create-username
-        />
-        <TextField
-          label="Email"
-          type="email"
-          value={email}
-          required
-          onChange={this.onChangeEmail}
-          errorText={hasErrorFor('email')}
-          data-qa-create-email
-        />
-        <FormControlLabel
-          style={{ marginTop: 8 }}
-          label={
-            restricted
-              ? `This user will have limited access to account features.
-              This can be changed later.`
-              : `This user will have full access to account features.
-              This can be changed later.`
-          }
-          control={
-            <Toggle
-              checked={!restricted}
-              onChange={this.onChangeRestricted}
-              data-qa-create-restricted
-            />
-          }
-        />
-        <div style={{ marginTop: 8 }}>
-          <Notice
-            warning
-            text="The user will be sent an email to set their password"
+        <form onSubmit={this.onSubmit}>
+          {generalError && <Notice error text={generalError} />}
+          <TextField
+            label="Username"
+            value={username}
+            required
+            onChange={this.onChangeUsername}
+            errorText={hasErrorFor('username')}
+            data-qa-create-username
           />
-        </div>
-        <ActionsPanel>
-          <Button
-            buttonType="primary"
-            onClick={this.onSubmit}
-            loading={submitting}
-            data-qa-submit
-          >
-            Submit
-          </Button>
-          <Button buttonType="cancel" onClick={onClose} data-qa-cancel>
-            Cancel
-          </Button>
-        </ActionsPanel>
+          <TextField
+            label="Email"
+            type="email"
+            value={email}
+            required
+            onChange={this.onChangeEmail}
+            errorText={hasErrorFor('email')}
+            data-qa-create-email
+          />
+          <FormControlLabel
+            style={{ marginTop: 8 }}
+            label={
+              restricted
+                ? `This user will have limited access to account features.
+                This can be changed later.`
+                : `This user will have full access to account features.
+                This can be changed later.`
+            }
+            control={
+              <Toggle
+                checked={!restricted}
+                onChange={this.onChangeRestricted}
+                data-qa-create-restricted
+              />
+            }
+          />
+          <div style={{ marginTop: 8 }}>
+            <Notice
+              warning
+              text="The user will be sent an email to set their password"
+            />
+          </div>
+          <ActionsPanel>
+            <Button
+              buttonType="primary"
+              onClick={this.onSubmit}
+              loading={submitting}
+              data-qa-submit
+            >
+              Submit
+            </Button>
+            <Button buttonType="cancel" onClick={onClose} data-qa-cancel>
+              Cancel
+            </Button>
+          </ActionsPanel>
+        </form>
       </Drawer>
     );
   }
