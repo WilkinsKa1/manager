@@ -95,7 +95,7 @@ const RenameVolumeForm: React.FC<CombinedProps> = props => {
         values
       }) => {
         return (
-          <Form>
+          <Form onSubmit={handleSubmit}>
             {status && (
               <NoticePanel
                 success={status.success}

@@ -157,7 +157,7 @@ export const AddNodePoolDrawer: React.FC<CombinedProps> = props => {
       onClose={onClose}
     >
       {error && <Notice className={classes.error} error text={error} />}
-      <form className={classes.plans}>
+      <form onSubmit={handleAdd} className={classes.plans}>
         <SelectPlanQuantityPanel
           // No nanodes or GPUs in clusters
           types={_types.filter(t => t.class !== 'nanode' && t.class !== 'gpu')}

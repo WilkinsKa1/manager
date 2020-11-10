@@ -342,7 +342,7 @@ export const RebuildFromStackScript: React.FC<CombinedProps> = props => {
                 </Typography>
               </Paper>
             )}
-            <form>
+            <form onSubmit={handleRebuildButtonClick}>
               <AccessPanel
                 password={values.root_pass}
                 handleChange={value => setFieldValue('root_pass', value)}
@@ -354,18 +354,18 @@ export const RebuildFromStackScript: React.FC<CombinedProps> = props => {
                 data-qa-access-panel
                 passwordHelperText={passwordHelperText}
               />
+              <ActionsPanel>
+                <Button
+                  buttonType="secondary"
+                  className="destructive"
+                  onClick={handleRebuildButtonClick}
+                  data-qa-rebuild
+                  data-testid="rebuild-button"
+                >
+                  Rebuild
+                </Button>
+              </ActionsPanel>
             </form>
-            <ActionsPanel>
-              <Button
-                buttonType="secondary"
-                className="destructive"
-                onClick={handleRebuildButtonClick}
-                data-qa-rebuild
-                data-testid="rebuild-button"
-              >
-                Rebuild
-              </Button>
-            </ActionsPanel>
             <RebuildDialog
               isOpen={isDialogOpen}
               isLoading={isSubmitting}

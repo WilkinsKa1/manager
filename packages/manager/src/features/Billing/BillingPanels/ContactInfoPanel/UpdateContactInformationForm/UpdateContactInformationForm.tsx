@@ -146,7 +146,7 @@ class UpdateContactInformationForm extends React.Component<
     }
 
     return (
-      <form>
+      <form onSubmit={this.submitForm}>
         {this.renderForm(account)}
         {this.renderFormActions()}
       </form>

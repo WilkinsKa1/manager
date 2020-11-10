@@ -204,7 +204,7 @@ const CreateVolumeForm: React.FC<CombinedProps> = props => {
         }
 
         return (
-          <Form className={classes.form}>
+          <Form onSubmit={handleSubmit} className={classes.form}>
             {generalError && <NoticePanel error={generalError} />}
             {status && <NoticePanel success={status.success} />}
             {disabled && (
